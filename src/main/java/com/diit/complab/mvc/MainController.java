@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -13,13 +14,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class MainController {
+    private EmployeeDao employeeDao;
+
     @Autowired
     @Qualifier("daoStub") //TODO убрать заглушку, юзать dao
-    private EmployeeDao employeeDao;
+    public void setEmployeeDao(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String printWelcome(ModelMap model) {
-            model.addAttribute("message", "Hello world!");
             return "index";
     }
 
@@ -30,8 +34,15 @@ public class MainController {
 
     @RequestMapping(value = "get.json", method = RequestMethod.GET)
     public String getModel(ModelMap model) {
-        List<Employee> all = employeeDao.getAll();
-        model.addAttribute(all);
+        List<Employee> list = employeeDao.getAll();
+        model.addAttribute(list);
+        return "jsonView";
+    }
+
+    @RequestMapping(value = "getById.json", method = RequestMethod.GET)
+    public String getModelById(@RequestParam int id, ModelMap model) {
+        Employee employee = employeeDao.getById(id);
+        model.addAttribute(employee);
         return "jsonView";
     }
 }

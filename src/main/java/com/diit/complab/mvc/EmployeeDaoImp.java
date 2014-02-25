@@ -14,11 +14,19 @@ public class EmployeeDaoImp implements EmployeeDao {
     @Autowired
     private SessionFactory sf;
 
+    public SessionFactory getSf() {
+        return sf;
+    }
+
+    public void setSf(SessionFactory sf) {
+        this.sf = sf;
+    }
+
     @Override
     @Transactional
     public Employee getById(Integer id) {
         Employee employee = (Employee) sf.getCurrentSession().createQuery("from Employee e where e.id=:id").
-                setInteger(id, 0);
+                setInteger("id", id);
         return employee;
     }
 
