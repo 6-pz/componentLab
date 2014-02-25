@@ -56,5 +56,6 @@
     </beans:bean>
 
     <beans:bean id = "dao" class="com.diit.complab.mvc.EmployeeDaoImp"/>
+    <beans:bean id = "daoStub" class="com.diit.complab.mvc.EmployeeDaoStub"/>
 
 </beans:beans>

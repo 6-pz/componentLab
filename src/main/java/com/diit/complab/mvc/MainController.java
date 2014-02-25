@@ -1,6 +1,7 @@
 package com.diit.complab.mvc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequestMapping("/")
 public class MainController {
     @Autowired
+    @Qualifier("daoStub") //TODO убрать заглушку, юзать dao
     private EmployeeDao employeeDao;
 
     @RequestMapping(method = RequestMethod.GET)
