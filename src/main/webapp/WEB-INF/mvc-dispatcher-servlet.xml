@@ -35,7 +35,7 @@
         <beans:property name="dataSource" ref="dataSource"></beans:property>
         <beans:property name="annotatedClasses">
             <beans:list>
-                <beans:value>com.diit.complab.Employee</beans:value>
+                <beans:value>com.diit.complab.mvc.Employee</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
