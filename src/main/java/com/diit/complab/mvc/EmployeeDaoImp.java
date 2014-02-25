@@ -2,6 +2,7 @@ package com.diit.complab.mvc;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class EmployeeDaoImp implements EmployeeDao {
     private SessionFactory sf;
 
     @Override
+    @Transactional
     public Employee getById(Integer id) {
         Employee employee = (Employee) sf.getCurrentSession().createQuery("from Employee e where e.id=:id").
                 setInteger(id, 0);
@@ -21,12 +23,14 @@ public class EmployeeDaoImp implements EmployeeDao {
     }
 
     @Override
+    @Transactional
     public List<Employee> getAll() {
         List<Employee> employees = sf.getCurrentSession().createQuery("from Employee e").list();
         return employees;
     }
 
     @Override
+    @Transactional
     public void add(Employee employee) {
         sf.getCurrentSession().save(employee);
     }
