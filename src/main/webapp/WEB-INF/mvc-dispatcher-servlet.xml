@@ -23,4 +23,30 @@
             <beans:property name="extractValueFromSingleKeyModel" value="false"/>
     </beans:bean>
 
+
+    <beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <beans:property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
+        <beans:property name="url" value="jdbc:derby://localhost:3306/test" />
+        <beans:property name="username" value="root" />
+        <beans:property name="password" value="root" />
+    </beans:bean>
+
+    <beans:bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <beans:property name="dataSource" ref="dataSource"></beans:property>
+        <beans:property name="annotatedClasses">
+            <beans:list>
+                <beans:value>com.diit.complab.Employee</beans:value>
+            </beans:list>
+        </beans:property>
+        <beans:property name="hibernateProperties">
+            <beans:props>
+                <beans:prop
+                        key="hibernate.dialect">org.hibernate.dialect.DerbyTenSixDialect</beans:prop>
+                <beans:prop key="hibernate.show_sql">true</beans:prop>
+            </beans:props>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id = "dao" class="com.diit.complab.mvc.EmployeeDaoImp"/>
+
 </beans:beans>

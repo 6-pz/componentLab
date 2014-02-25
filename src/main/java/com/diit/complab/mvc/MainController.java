@@ -27,5 +27,4 @@ public class MainController {
         model.addAttribute("message3", "Hello world!");
         return "jsonView";
     }
-
 }
