@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/")
 public class MainController {
     @Autowired
-    @Qualifier("daoStub") //TODO убрать заглушку, юзать dao
+    @Qualifier("daoStub")
     private EmployeeDao employeeDao;
 
     @RequestMapping(method = RequestMethod.GET)
@@ -30,8 +30,8 @@ public class MainController {
 
     @RequestMapping(value = "get.json", method = RequestMethod.GET)
     public String getModel(ModelMap model) {
-        List<Employee> all = employeeDao.getAll();
-        model.addAttribute(all);
+        List<Employee> all = employeeDao.getAll();         
+        model.addAttribute("result", all);
         return "jsonView";
     }
 }
