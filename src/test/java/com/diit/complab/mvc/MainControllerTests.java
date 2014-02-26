@@ -36,6 +36,7 @@ public class MainControllerTests {
         //ставим заглушку
         EmployeeDao stubEmployeeDao = mock(EmployeeDao.class);
         when(stubEmployeeDao.getAll()).thenReturn(Arrays.asList(new Employee[] {new Employee(), new Employee()}));
+        when(stubEmployeeDao.getById(3)).thenReturn(new Employee());
         wac.getBean(MainController.class).setEmployeeDao(stubEmployeeDao);
     }
 
@@ -49,6 +50,13 @@ public class MainControllerTests {
     @Test
     public void getTest() throws Exception {
         mockMvc.perform(get("/get.json"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("jsonView")).andExpect(model().size(1));
+    }
+
+    @Test
+    public void getByIdTest() throws Exception {
+        mockMvc.perform(get("/getById.json?id=3"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("jsonView")).andExpect(model().size(1));
     }
