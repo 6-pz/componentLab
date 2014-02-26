@@ -12,35 +12,36 @@ import java.util.List;
 public class EmployeeDaoImp implements EmployeeDao {
 
     @Autowired
-    private SessionFactory sf;
+    private SessionFactory sessionFactory;
 
     public SessionFactory getSf() {
-        return sf;
+        return sessionFactory;
     }
 
     public void setSf(SessionFactory sf) {
-        this.sf = sf;
+        this.sessionFactory = sf;
     }
 
     @Override
     @Transactional
     public Employee getById(Integer id) {
-        Employee employee = (Employee) sf.getCurrentSession().createQuery("from Employee e where e.id=:id").
-                setInteger("id", id);
+        
+        Employee employee = (Employee) sessionFactory.getCurrentSession().createQuery("from Employee e where e.id=:id").
+                setInteger("id", id).uniqueResult();
         return employee;
     }
 
     @Override
     @Transactional
     public List<Employee> getAll() {
-        List<Employee> employees = sf.getCurrentSession().createQuery("from Employee e").list();
+        List<Employee> employees = sessionFactory.getCurrentSession().createQuery("from Employee e").list();
         return employees;
     }
 
     @Override
     @Transactional
     public void add(Employee employee) {
-        sf.getCurrentSession().save(employee);
+        sessionFactory.getCurrentSession().save(employee);
     }
 }
 

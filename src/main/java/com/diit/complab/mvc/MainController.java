@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/")
@@ -16,16 +19,21 @@ public class MainController {
     private EmployeeDao employeeDao;
 
     @Autowired
-    @Qualifier("daoStub") //TODO убрать заглушку, юзать dao
+    @Qualifier("dao") //TODO убрать заглушку, юзать dao
     public void setEmployeeDao(EmployeeDao employeeDao) {
         this.employeeDao = employeeDao;
+    }
+    
+    @RequestMapping(value = "addEmp.json", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    private void addEmployee(@RequestBody Employee employee) {
+        employeeDao.add(employee);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String printWelcome(ModelMap model) {
             return "index";
     }
-
+    
     @RequestMapping(value = "form.html", method = RequestMethod.GET)
     public String printForm(ModelMap model) {
         return "form";
@@ -40,7 +48,7 @@ public class MainController {
 
     @RequestMapping(value = "getById.json", method = RequestMethod.GET)
     public String getModelById(@RequestParam int id, ModelMap model) {
-        Employee employee = employeeDao.getById(id);
+        List<Employee> employee = employeeDao.getAll();
         model.addAttribute(employee);
         return "jsonView";
     }
